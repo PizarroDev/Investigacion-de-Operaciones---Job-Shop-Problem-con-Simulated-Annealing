@@ -28,7 +28,6 @@ def main():
     res = simulated_annealing(inst, presupuesto=args.presupuesto, semilla=args.semilla)
     duracion = time.perf_counter() - inicio
 
-    # Verificacion independiente de la solucion final
     factible = verificar_programa(inst, decodificar(inst, res["mejor_secuencia"]))
 
     print(f"\nMejor makespan: {res['mejor_makespan']}")

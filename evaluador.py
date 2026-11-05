@@ -75,7 +75,6 @@ def verificar_programa(inst, programa):
 
 
 def secuencia_aleatoria(inst, rng):
-    """Genera una solucion aleatoria (permutacion con repeticion)."""
     secuencia = [j for j in range(inst.n) for _ in range(inst.m)]
     rng.shuffle(secuencia)
     return secuencia
@@ -90,7 +89,6 @@ if __name__ == "__main__":
         print(inst)
         print(f"  Cota inferior: {inst.cota_inferior()}")
 
-        # Evaluar 1000 soluciones aleatorias y verificar factibilidad
         valores = []
         t0 = time.perf_counter()
         for _ in range(1000):
