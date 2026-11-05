@@ -41,11 +41,17 @@ tarea2_jsp/
   evaluador.py      calcula el makespan y revisa las restricciones
   instancia.py      lee los archivos de las instancias
   graficos.py       gantt, boxplots y convergencia
+  talleres.py       programa de los talleres 1 a 8 (un comando por taller)
   instancias/
+    00_pequena.txt  4 trabajos x 3 maquinas (para la busqueda exhaustiva)
     01_facil.txt    6 trabajos x 6 maquinas (es la instancia ft06)
     02_medio.txt    15 trabajos x 10 maquinas
     03_dificil.txt  50 trabajos x 10 maquinas
-  resultados/       se crea sola al ejecutar, aca quedan los graficos y el csv
+  soluciones/       archivos de soluciones de ejemplo para los talleres
+    sol_valida.txt      una solucion valida de 01_facil
+    sol_invalida.txt    una solucion invalida de 01_facil
+    dos_soluciones.txt  dos soluciones de 01_facil para comparar
+  resultados/      se crea sola al ejecutar, aca quedan los graficos y el csv
 
 La carpeta instancias tiene que ir en minuscula y al lado de los .py.
 
@@ -105,6 +111,62 @@ la media y la desviacion estandar. Ademas deja en la carpeta de salida:
 Lee las 3 instancias, evalua 1000 soluciones aleatorias en cada una, revisa que
 sean factibles y muestra cuanto se demora una evaluacion. Sirve para comprobar
 que la lectura y la funcion objetivo funcionan bien.
+
+4.4 Talleres 1 a 8 (talleres.py)
+
+Cada taller pide el programa del anterior mas una funcionalidad nueva. Todas
+estan en talleres.py, un comando por funcionalidad:
+
+  Taller  Comando y ejemplo
+  T1      python talleres.py info instancias/01_facil.txt
+            tamaño, ruta de cada trabajo, carga por maquina, cota inferior y
+            tamaño del espacio de soluciones
+  T2-T3   python talleres.py verificar instancias/01_facil.txt soluciones/sol_valida.txt
+            lee las soluciones del archivo, dice si son validas (y por que no)
+            y calcula el makespan. Con --detalle muestra inicio y fin de cada
+            operacion
+  T3      python talleres.py comparar instancias/01_facil.txt soluciones/dos_soluciones.txt
+            compara las dos primeras soluciones: primero la validez, despues
+            el makespan
+  T4      python talleres.py exhaustiva instancias/00_pequena.txt
+            mejor solucion, tiempo, soluciones revisadas en total y hasta
+            encontrar la mejor
+  T5      python talleres.py iniciales instancias/01_facil.txt
+            soluciones aleatorias y heuristica greedy MWKR (elige el trabajo
+            con mas trabajo pendiente)
+  T6      python talleres.py vecino instancias/01_facil.txt
+            una solucion inicial y sus vecinos por swap e insert, evaluados.
+            Con --solucion ARCHIVO parte de una solucion dada
+  T7      python talleres.py local instancias/01_facil.txt
+            busqueda local con primera mejora desde 10 soluciones iniciales
+  T8      python talleres.py sa instancias/01_facil.txt
+            simulated annealing
+  T7-T8   python talleres.py comparar_metodos instancias/00_pequena.txt
+            exhaustiva vs busqueda local vs SA (10 ejecuciones cada uno)
+
+Formato de los archivos de soluciones: una solucion por linea, con los numeros
+de trabajo separados por espacios (la misma representacion de la seccion 6.1).
+Las lineas que empiezan con # son comentarios.
+
+Busqueda exhaustiva: recorre todas las permutaciones con repeticion,
+(n*m)!/(m!)^n. La instancia 01_facil tiene unas 2,67 x 10^24, asi que no se
+puede recorrer; si se intenta, el programa avisa y no ejecuta. Por eso se
+agrego 00_pequena.txt (4x3, 369.600 soluciones), que se recorre en menos de
+un segundo. El makespan se va calculando a medida que se arma la secuencia,
+por eso es rapida.
+
+Busqueda local: el vecindario son todos los swaps e inserts de la solucion,
+recorridos en orden aleatorio. Se mueve al primer vecino que mejora y termina
+cuando ningun vecino mejora (optimo local).
+
+Resultados obtenidos (presupuesto 20000):
+  00_pequena: la exhaustiva da el optimo 26. El SA llega a 26 en las 10
+              ejecuciones; la busqueda local llega a 26 en 9 y en una se queda
+              en un optimo local de 29.
+  01_facil:   la busqueda local queda en optimos locales (media 59,3, peor
+              62), mientras que el SA llega a 55 en las 10 ejecuciones. El SA
+              escapa de los optimos locales porque a veces acepta soluciones
+              peores.
 
 
 ------------------------------------------------------------------------------

@@ -1,0 +1,2 @@
+# Instancia 01_facil (6x6): cada trabajo 0..5 aparece 6 veces
+0 1 2 3 4 5 0 1 2 3 4 5 0 1 2 3 4 5 0 1 2 3 4 5 0 1 2 3 4 5 0 1 2 3 4 5
