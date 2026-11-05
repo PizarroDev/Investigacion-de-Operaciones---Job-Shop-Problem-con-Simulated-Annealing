@@ -1,1 +1,0 @@
-# Investigacion-de-Operaciones---Job-Shop-Problem-con-Simulated-Annealing
